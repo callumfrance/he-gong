@@ -16,3 +16,10 @@ HE-GONG
     - [gpiozero](https://gpiozero.readthedocs.io/en/stable/)
     - [pytest](https://docs.pytest.org/en/stable/)
     - [paho-mqtt](https://pypi.org/project/paho-mqtt/)
+
+## Schematic
+This is the going schematic (v1.5)
+<p align="center">
+  <img width="600" src="Gong Schematic 1_5_schem.png">
+</p>
+
