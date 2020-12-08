@@ -1,5 +1,4 @@
 import gpiozero
-from time import sleep
 
 class ViewPi:
 
@@ -39,8 +38,8 @@ class ViewPi:
             raise ValueError("strikeState not permitted to be ", in_strike_state)
 
     def volume_loop(self):
-        if (self.muteSwitch.is_pressed() == False):
-            self.volumeLevel = self.potVolume.value() # check if this is [-1, 1] or [0, 1]
+        if (self.muteSwitch.value == 0):
+            self.volumeLevel = self.potVolume.value # check if this is [-1, 1] or [0, 1]
         elif (self.volumeLevel != 0):
             self.volumeLevel = 0
 
@@ -52,13 +51,13 @@ class ViewPi:
             self.dcMotor[0].stop()
 
     def state_active(self):
-        if (self.contactSwitch[0].is_pressed()):
+        if (self.contactSwitch[0].value == 1):
             self.strikeState = 'reset'
-        elif (self.volumeLevel > 0):
+        elif (self.volumeLevel != 0): # check how AnalogInputDevice.value works for this device
             self.dcMotor[0].forward()
 
     def state_reset(self):
-        if (self.contactSwitch[1].is_pressed()):
+        if (self.contactSwitch[1].value == 1):
             self.strikeState = 'idle'
         else:
             self.dcMotor[0].backward()
