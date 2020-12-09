@@ -25,6 +25,7 @@ class ViewPi:
         # see L298N motor driver documentation for details
         self.motorDirection = [ gpiozero.Motor(motorDirection[0], motorDirection[1], pwm=False), 
                 gpiozero.PWMOutputDevice(motorDirection[2]) ]
+        # This is a toggle switch not a button
         self.muteSwitch = gpiozero.Button(muteSwitch, bounce_time=self.BOUNCE_TIME)
         
         self.strikeState = 'idle'
@@ -33,12 +34,16 @@ class ViewPi:
     def strikeState(self):
         return self._strikeState
 
-    def current_volume(self):
-        vol = 0
+    def current_volume(self) -> float:
+        """ Returns an float value of the volume between 0 and 1
+        """
+        vol = 0.0
         if (self.muteSwitch.value == 0):
-            vol = 0
+            vol = 0.0
         elif (self.potVolume.value):
-            vol = self.potVolume.value # assume [0, 1] and not [-1, 1]
+            if isinstance(self.potVolume.value, float) or \
+                    isinstance(self.potVolume.value, int):
+                vol = float(self.potVolume.value) # assume [0, 1] and not [-1, 1]
 
         self.ledVolume = vol
 
