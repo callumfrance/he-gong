@@ -1,6 +1,6 @@
 import pytest
 
-from model/mqtt_commands.py import MqttCommands
+from model.mqtt_commands import MqttCommands
 
 @pytest.fixture
 def mqttcomm():
@@ -11,4 +11,10 @@ class TestMqttCommands:
 
 
     def test_class_build(mqttcomm):
+        pass
+
+    def test_on_connect(mqttcomm):
+        pass
+
+    def test_on_message(mqttcomm):
         pass

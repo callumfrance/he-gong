@@ -13,17 +13,17 @@ class MqttCommands:
 
 
     def __init__(self):
-        self.client = None
+        self.client = mqtt.Client()
 
-    def make_blocking_connection(self):
-        self.client = mqtt.client
+    def make_connection(self):
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
         self.client.connect(CONNECT_HOST, CONNECT_PORT, CONNECT_KEEPALIVE)
-        self.client.loop_forever()
+        # check to find a way to keep persistent with being a blocking method call
+        # self.client.loop_forever()
 
     def on_connect(self, userdata, flags, rc):
         self.client.subscribe(SUBSCRIBE_TOPIC)
 
     def on_message(userdata, msg):
-        print(msg.topic+" "+str(msg.payload))
+        print(msg.topic + " " + str(msg.payload))
